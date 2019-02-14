@@ -713,13 +713,11 @@ static void __init smp_build_mpidr_hash(void)
 static void __init setup_processor(void)
 {
 	struct proc_info_list *list;
-
 	/*
 	 * locate processor in the list of supported processor
 	 * types.  The linker builds this table for us from the
 	 * entries in arch/arm/mm/proc-*.S
 	 */
-	arm_init_bp_hardening();
 	list = lookup_processor_type(read_cpuid_id());
 	if (!list) {
 		pr_err("CPU configuration botched (ID %08x), unable to continue.\n",
@@ -744,7 +742,7 @@ static void __init setup_processor(void)
 #endif
 
 	pr_info("CPU: %s [%08x] revision %d (ARMv%s), cr=%08lx\n",
-		cpu_name, read_cpuid_id(), read_cpuid_id() & 15,
+		list->cpu_name, midr, midr & 15,
 		proc_arch[cpu_architecture()], get_cr());
 
 	snprintf(init_utsname()->machine, __NEW_UTS_LEN + 1, "%s%c",
