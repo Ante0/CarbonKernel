@@ -2235,45 +2235,6 @@ reinit:
 			} else {
 				card->ext_csd.cache_ctrl = 1;
 			}
-			/* enable cache barrier if supported by the device */
-			if (card->ext_csd.cache_ctrl &&
-					card->ext_csd.barrier_support) {
-				err = mmc_switch(card, EXT_CSD_CMD_SET_NORMAL,
-					EXT_CSD_BARRIER_CTRL, 1,
-					card->ext_csd.generic_cmd6_time);
-				if (err && err != -EBADMSG) {
-					pr_err("%s: %s: mmc_switch() for BARRIER_CTRL fails %d\n",
-						mmc_hostname(host), __func__,
-						err);
-					goto free_card;
-				}
-				if (err) {
-					pr_warn("%s: Barrier is supported but failed to turn on (%d)\n",
-						mmc_hostname(card->host), err);
-					card->ext_csd.barrier_en = 0;
-					err = 0;
-				} else {
-					card->ext_csd.barrier_en = 1;
-				}
-			}
-		} else {
-			/*
-			 * mmc standard doesn't say what is the card default
-			 * value for EXT_CSD_CACHE_CTRL.
-			 * Hence, cache may be enabled by default by
-			 * card vendors.
-			 * Thus, it is best to explicitly disable cache in case
-			 * we want to avoid cache.
-			 */
-			err = mmc_switch(card, EXT_CSD_CMD_SET_NORMAL,
-					EXT_CSD_CACHE_CTRL, 0,
-					card->ext_csd.generic_cmd6_time);
-			if (err) {
-				pr_err("%s: %s: fail on CACHE_CTRL OFF %d\n",
-					mmc_hostname(host), __func__, err);
-				goto free_card;
-			}
-		}
 	}
 	/*
 	 * The mandatory minimum values are defined for packed command.
