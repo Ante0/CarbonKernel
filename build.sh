@@ -4,8 +4,9 @@
 #export AARCH64_COMPILR=$HOME/android/kernel/aarch64-linux-android-4.9/bin
 #export CROSS_COMPILE=aarch64-linux-android-
 #export PATH=$PATH:$AARCH64_COMPILR
-export AARCH64_COMPILR=$HOME/android/kernel/aarch64-linux-android-linaro/bin
-export CROSS_COMPILE=aarch64-linux-android-
-export PATH=$PATH:$AARCH64_COMPILR
+
+#export AARCH64_COMPILR=$HOME/android/kernel/aarch64-linux-android-linaro/bin
+#export CROSS_COMPILE=aarch64-linux-android-
+#export PATH=$PATH:$AARCH64_COMPILR
 make ARCH=arm64 O=out/ carbon_oneplus6_defconfig
 make ARCH=arm64 O=out/ -j`nproc`
