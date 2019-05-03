@@ -31,6 +31,8 @@
 #include <trace/events/kmem.h>
 #include <soc/qcom/secure_buffer.h>
 
+#define NUM_ORDERS ARRAY_SIZE(orders)
+
 static gfp_t high_order_gfp_flags = (GFP_HIGHUSER | __GFP_NOWARN |
 				     __GFP_NORETRY) & ~__GFP_RECLAIM;
 static gfp_t low_order_gfp_flags  = (GFP_HIGHUSER | __GFP_NOWARN);
